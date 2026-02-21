@@ -337,4 +337,42 @@ export class SlackClient {
         .map(([key, value]) => [`:${key}:`, value] as const),
     );
   }
+
+  public static async setStatus({
+    statusText,
+    emoji,
+    expiration,
+    originProfile,
+  }: {
+    statusText?: string;
+    emoji?: string;
+    expiration?: number;
+    originProfile?: Profile;
+  }) {
+    const slackWebClient = getSlackWebClient();
+
+    const profile = {
+      status_text: originProfile?.status_text,
+      status_emoji: originProfile?.status_emoji,
+      status_expiration: originProfile?.status_expiration,
+    };
+
+    if (statusText !== undefined) {
+      profile.status_text = statusText;
+    }
+
+    if (emoji !== undefined) {
+      profile.status_emoji = emoji;
+    }
+
+    if (expiration !== undefined) {
+      profile.status_expiration = expiration;
+    }
+
+    const result = await slackWebClient.users.profile.set({
+      profile: profile,
+    });
+
+    return result.profile;
+  }
 }
