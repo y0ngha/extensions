@@ -92,6 +92,13 @@
       "subtitle": "Slack",
       "description": "Search custom emojis in your Slack team.",
       "mode": "view"
+    },
+    {
+      "name": "set-status",
+      "title": "Set Status",
+      "subtitle": "Slack",
+      "description": "Set your status.",
+      "mode": "view"
     }
   ],
   "preferences": [
