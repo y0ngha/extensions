@@ -7,6 +7,7 @@ import { useCallback, useMemo } from "react";
 import { type SlackStatusForm, StatusForm } from "./components/set-status/statuts-form.component";
 import { EmojiPicker } from "./components/set-status/emoji-picker.component";
 import { getDurationOptionFromTimestamp, getTextForExpiration } from "./utils/set-status/expiration.util";
+import { showToastWithPromise } from "./utils/toast.util";
 
 function SlackStatusList() {
   const { data: me, isLoading: isFetchMeLoading } = useMe();
@@ -98,39 +99,66 @@ function SlackStatusList() {
 
   const handeStatusChange = useCallback(
     async (form: SlackStatusForm) => {
-      console.log(form)
-      await SlackClient.setStatus({
-        statusText: form.statusText,
-        emoji: form.emoji,
-        expiration: form.expiration,
-        originProfile: profile
-      });
+      await showToastWithPromise(
+        async () => {
+          await SlackClient.setStatus({
+            statusText: form.statusText,
+            emoji: form.emoji,
+            expiration: form.expiration,
+            originProfile: profile,
+          });
 
-      await mutate();
+          await mutate();
+        },
+        {
+          loading: "The status is changing...",
+          error: "An error occurred while changing the state.",
+          success: `The status has changed(${form.emoji} ${form.statusText}).`,
+        },
+      );
     },
     [mutate, profile],
   );
 
   const handleEmojiChange = useCallback(
     async (emoji: { name: string; value: string }) => {
-      await SlackClient.setStatus({
-        emoji: emoji.name,
-      });
+      await showToastWithPromise(
+        async () => {
+          await SlackClient.setStatus({
+            emoji: emoji.name,
+            originProfile: profile,
+          });
 
-      await mutate(); // 상태 새로고침
+          await mutate();
+        },
+        {
+          loading: "The status emoji is changing...",
+          error: "An error occurred while changing the state.",
+          success: `The emoji has changed(${emoji.name}).`,
+        },
+      );
     },
-    [mutate],
+    [mutate, profile],
   );
 
   const clearStatus = useCallback(async () => {
-    await SlackClient.setStatus({
-      emoji: "",
-      statusText: "",
-      expiration: 0,
-      originProfile: profile,
-    });
+    await showToastWithPromise(
+      async () => {
+        await SlackClient.setStatus({
+          emoji: "",
+          statusText: "",
+          expiration: 0,
+          originProfile: profile,
+        });
 
-    await mutate();
+        await mutate();
+      },
+      {
+        loading: "The status emoji is changing...",
+        error: "An error occurred while changing the state.",
+        success: `The status has been removed.`,
+      },
+    );
   }, [mutate, profile]);
 
   return (
