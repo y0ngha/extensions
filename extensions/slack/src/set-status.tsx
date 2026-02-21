@@ -99,7 +99,7 @@ function SlackStatusList() {
   }, [profile?.status_expiration]);
 
   const handeStatusChange = useCallback(
-    async (form: SlackStatusForm) => {
+    async (form: Pick<SlackStatusForm, "statusText" | "emoji" | "expiration">) => {
       await showToastWithPromise(
         async () => {
           await SlackClient.setStatus({
@@ -114,7 +114,10 @@ function SlackStatusList() {
         {
           loading: "The status is changing...",
           error: "An error occurred while changing the state.",
-          success: `The status has changed(${form.emoji} ${form.statusText}).`,
+          success: () => ({
+            title: "Set status emoji, text",
+            message: `${form.emoji} ${form.statusText}`,
+          }),
         },
       );
     },
@@ -135,7 +138,10 @@ function SlackStatusList() {
         {
           loading: "The status emoji is changing...",
           error: "An error occurred while changing the state.",
-          success: `The emoji has changed(${emoji.name}).`,
+          success: () => ({
+            title: "Set status emoji",
+            message: `${emoji.name}`,
+          }),
         },
       );
     },
