@@ -52,4 +52,4 @@ function EmojiPicker({ emojis, onSelect }: EmojiPickerProps) {
 
 EmojiPicker.displayName = "EmojiPicker";
 
-export { EmojiPicker }
+export { EmojiPicker };

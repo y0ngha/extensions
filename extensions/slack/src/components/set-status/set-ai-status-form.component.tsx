@@ -63,7 +63,7 @@ function SetStatusWithAIAction({ inputText, onSubmit }: SetStatusWithAIActionPro
   );
 }
 
-function SetAiStatusForm({ onSubmit }: Pick<SetStatusWithAIActionProps, 'onSubmit'>) {
+function SetAiStatusForm({ onSubmit }: Pick<SetStatusWithAIActionProps, "onSubmit">) {
   const [searchText, setSearchText] = useState<string>();
 
   return (
