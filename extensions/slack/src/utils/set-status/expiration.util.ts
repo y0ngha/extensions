@@ -88,3 +88,57 @@ export function getTextForExpiration(expirationTimestamp: number): string | unde
 
   return `Clears in ${relativeDuration}`;
 }
+
+export function getExpirationTimestamp(value: string): number {
+  if (value === "custom") {
+    throw new Error("error: 'custom' value must use a separate DatePicker state.");
+  }
+
+  const now = new Date();
+
+  switch (value) {
+    case "0":
+      return 0;
+    case "today":
+      now.setHours(23, 59, 59, 0);
+      return Math.floor(now.getTime() / 1000);
+    case "week": {
+      const dayOfWeek = now.getDay();
+
+      const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
+
+      now.setDate(now.getDate() + daysUntilFriday);
+      now.setHours(23, 59, 59, 0);
+
+      return Math.floor(now.getTime() / 1000);
+    }
+    default: {
+      const minutes = parseInt(value, 10);
+
+      if (isNaN(minutes)) {
+        return 0;
+      }
+
+      return Math.floor(now.getTime() / 1000) + minutes * 60;
+    }
+  }
+}
+
+export function getDurationOptionFromTimestamp(expirationTimestamp: number): string {
+  if (expirationTimestamp === 0) {
+    return "0";
+  }
+
+  const todayTimestamp = getExpirationTimestamp("today");
+  const weekTimestamp = getExpirationTimestamp("week");
+
+  if (expirationTimestamp === todayTimestamp) {
+    return "today";
+  }
+
+  if (expirationTimestamp === weekTimestamp) {
+    return "week";
+  }
+
+  return "custom";
+}
