@@ -1,13 +1,14 @@
 import { useCachedPromise } from "@raycast/utils";
 import { SlackClient, useMe } from "./shared/client";
 import { withSlackClient } from "./shared/withSlackClient";
-import { Action, ActionPanel, List } from "@raycast/api";
+import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { SLACK_EMOJI_CODE_MAP } from "./constants/emoji.constants";
 import { useCallback, useMemo } from "react";
 import { type SlackStatusForm, StatusForm } from "./components/set-status/statuts-form.component";
 import { EmojiPicker } from "./components/set-status/emoji-picker.component";
 import { getDurationOptionFromTimestamp, getTextForExpiration } from "./utils/set-status/expiration.util";
 import { showToastWithPromise } from "./utils/toast.util";
+import SetAiStatusForm from "./components/set-status/set-ai-status-form.component";
 
 function SlackStatusList() {
   const { data: me, isLoading: isFetchMeLoading } = useMe();
@@ -205,6 +206,16 @@ function SlackStatusList() {
                 title={"Choose Emoji"}
                 target={<EmojiPicker emojis={emojis} onSelect={handleEmojiChange} />}
               />
+            </ActionPanel>
+          }
+        />
+
+        <List.Item
+          title={"Set AI Prompt Status"}
+          icon={Icon.Stars}
+          actions={
+            <ActionPanel>
+              <Action.Push title={"Set AI Prompt Status"} target={<SetAiStatusForm onSubmit={handeStatusChange} />} />
             </ActionPanel>
           }
         />
