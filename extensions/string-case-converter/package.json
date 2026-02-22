@@ -3,7 +3,7 @@
   "name": "string-case-converter",
   "title": "String Case Converter",
   "description": "Convert to String Convenstion.",
-  "icon": "extension-icon.png",
+  "icon": "string-extension-icon.png",
   "author": "dev_y0ngha",
   "platforms": [
     "macOS",
