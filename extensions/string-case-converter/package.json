@@ -16,9 +16,9 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "string-manipulation",
-      "title": "String Manipulation",
-      "description": "Test",
+      "name": "string-case-converter",
+      "title": "String Case Converter",
+      "description": "Instantly convert text between camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and more.",
       "mode": "view"
     }
   ],
