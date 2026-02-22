@@ -28,8 +28,8 @@ function StringCaseConverter() {
   return (
     <List onSearchTextChange={setSearchText} throttle>
       <List.Section title="Convention Convert">
-        <ConvertCaseItem icon={'🐪'} title={"camelCase"} convertFunction={toCamelCase} input={input} />
-        <ConvertCaseItem icon={Icon.Text}  title={"PascalCase"} convertFunction={toPascalCase} input={input} />
+        <ConvertCaseItem icon={"🐪"} title={"camelCase"} convertFunction={toCamelCase} input={input} />
+        <ConvertCaseItem icon={Icon.Text} title={"PascalCase"} convertFunction={toPascalCase} input={input} />
         <ConvertCaseItem icon={Icon.Link} title={"kebab-case"} convertFunction={toSnakeCase} input={input} />
         <ConvertCaseItem icon={Icon.Minus} title={"snake_case"} convertFunction={toKebabCase} input={input} />
         <ConvertCaseItem icon={Icon.Dot} title={"dot.case"} convertFunction={toDotCase} input={input} />
