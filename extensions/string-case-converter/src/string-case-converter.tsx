@@ -12,7 +12,7 @@ import {
 } from "./utils/string-convert.util";
 import { ConvertCaseItem } from "./components/convert-case-item.component";
 
-function StringManipulation() {
+function StringCaseConverter() {
   const [searchText, setSearchText] = useState("");
 
   const input = searchText || "";
@@ -47,4 +47,4 @@ function StringManipulation() {
   );
 }
 
-export default StringManipulation;
+export default StringCaseConverter;
